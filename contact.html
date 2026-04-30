@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Lossless Video</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- NAV -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="index.html"><img src="assets/images/L_logo.png" alt="Lossless Video"></a>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">HOME</a>
+            <a href="work.html">WORK</a>
+            <a href="services.html">SERVICES</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <div class="nav-indicator" id="indicator"></div>
+        </div>
+        <a href="contact.html" class="nav-btn">START PROJECT</a>
+    </div>
+
+    <div class="panel" style="margin-top:10px;">
+        <div class="contact-grid">
+
+            <!-- CONTACT INFO -->
+            <div class="contact-info panel">
+                <h2>CONTACT INFO</h2>
+
+                <div class="item">
+                    <span class="item-icon">✉</span>
+                    <a href="mailto:losslessvideo@gmail.com">losslessvideo@gmail.com</a>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">📷</span>
+                    <a href="https://instagram.com/lossless_video" target="_blank" rel="noopener">@lossless_video</a>
+                </div>
+
+                <div class="item">
+                    <span class="item-icon">in</span>
+                    <a href="https://linkedin.com/in/levi-simpson-92ab65406" target="_blank" rel="noopener">/in/levi-simpson-92ab65406</a>
+                </div>
+            </div>
+
+            <!-- FORM -->
+            <div class="form-panel panel">
+                <h2>START A PROJECT</h2>
+
+                <!--
+                    HOW THE FORM IS WIRED
+                    ---------------------
+                    This form posts to a hidden iframe which targets a Google Form.
+                    Until you set up your Google Form, the form will collect data
+                    but submissions go nowhere. To wire it up:
+
+                      1. Create a Google Form at forms.google.com with these fields
+                         (in this order, matching the names below):
+                           - Full Name (short answer)
+                           - Email Address (short answer)
+                           - Phone Number (short answer)
+                           - Project Type (multiple choice or short answer)
+                           - Budget Range (multiple choice or short answer)
+                           - Tell us about your project (paragraph)
+
+                      2. Click "Send" → "Link" icon → copy the form URL.
+                         It looks like: https://docs.google.com/forms/d/e/FORM_ID/viewform
+                         Change "viewform" to "formResponse" — that's your form ACTION URL.
+
+                      3. To find each field's "entry.XXXXXX" name:
+                         Open the form preview, right-click each field → Inspect.
+                         Look for name="entry.123456789".
+
+                      4. Paste the action URL into the form's `action=` below,
+                         and replace each `entry.0000000000` with the real entry ID.
+
+                    Full step-by-step is in README.md.
+                -->
+                <form id="contactForm"
+                      action="https://docs.google.com/forms/d/e/PASTE_YOUR_FORM_ID/formResponse"
+                      method="POST"
+                      target="hidden_iframe"
+                      onsubmit="handleSubmit()">
+
+                    <div class="form-row">
+                        <div class="field">
+                            <input type="text" name="entry.0000000001" placeholder="FULL NAME" required>
+                        </div>
+                        <div class="field">
+                            <input type="email" name="entry.0000000002" placeholder="EMAIL ADDRESS" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field">
+                            <input type="tel" name="entry.0000000003" placeholder="PHONE NUMBER">
+                        </div>
+                        <div class="field">
+                            <select name="entry.0000000004" required>
+                                <option value="">PROJECT TYPE</option>
+                                <option>Music Video</option>
+                                <option>Commercial</option>
+                                <option>Short Film</option>
+                                <option>Corporate</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <select name="entry.0000000005" required>
+                            <option value="">BUDGET RANGE</option>
+                            <option>Under $300</option>
+                            <option>$300 – $500</option>
+                            <option>$500 – $1000</option>
+                            <option>$1000 – $2500</option>
+                            <option>$2500+</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <textarea name="entry.0000000006" placeholder="TELL US ABOUT YOUR PROJECT..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">⊕ SUBMIT REQUEST</button>
+                </form>
+
+                <div class="form-success" id="formSuccess">
+                    ✓ REQUEST SUBMITTED — WE'LL BE IN TOUCH SOON.
+                </div>
+
+                <!-- Hidden iframe receives the Google Form response so we don't redirect away -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div>STATUS: <span>ONLINE</span></div>
+        <div>RESOLUTION: <span>4K UHD</span></div>
+        <div>EST. <span data-year>2025</span></div>
+    </div>
+
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+    function handleSubmit() {
+        // Show success after a brief delay (form posts to hidden iframe in background)
+        setTimeout(() => {
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        }, 600);
+    }
+</script>
+
+</body>
+</html>

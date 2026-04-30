@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Lossless Video</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- NAV -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="index.html"><img src="assets/images/L_logo.png" alt="Lossless Video"></a>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">HOME</a>
+            <a href="work.html">WORK</a>
+            <a href="services.html">SERVICES</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <div class="nav-indicator" id="indicator"></div>
+        </div>
+        <a href="contact.html" class="nav-btn">START PROJECT</a>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="panel" style="margin-top:10px;">
+        <div class="section-header">
+            <span>📁 PROJECTS</span>
+        </div>
+
+        <div class="filters" id="filters">
+            <button class="filter active" data-cat="all">ALL</button>
+            <button class="filter" data-cat="music">MUSIC VIDEOS</button>
+            <button class="filter" data-cat="commercial">COMMERCIALS</button>
+            <button class="filter" data-cat="film">FILMS</button>
+            <button class="filter" data-cat="corporate">CORPORATE</button>
+        </div>
+
+        <div class="cards" id="projectCards"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div>STATUS: <span>ONLINE</span></div>
+        <div>RESOLUTION: <span>4K UHD</span></div>
+        <div>EST. <span data-year>2025</span></div>
+    </div>
+
+</div>
+
+<script src="assets/js/projects.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+    const grid = document.getElementById('projectCards');
+    const filters = document.querySelectorAll('#filters .filter');
+
+    function render(cat) {
+        grid.innerHTML = '';
+        const list = cat === 'all' ? PROJECTS : PROJECTS.filter(p => p.category === cat);
+        if (list.length === 0) {
+            grid.innerHTML = '<div style="grid-column:1/-1;padding:40px;text-align:center;color:#888;">NO PROJECTS IN THIS CATEGORY YET</div>';
+            return;
+        }
+        list.forEach(p => {
+            const a = document.createElement('a');
+            a.href = `project.html?id=${p.id}`;
+            a.className = 'card';
+            a.innerHTML = `
+                <img src="${p.poster}" alt="${p.title}">
+                <div class="play"></div>
+                <div class="card-info">
+                    <div class="card-title">${p.title.toUpperCase()}</div>
+                    <div class="card-type">${p.type.toUpperCase()}</div>
+                </div>
+            `;
+            grid.appendChild(a);
+        });
+    }
+
+    filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            render(btn.dataset.cat);
+        });
+    });
+
+    render('all');
+</script>
+
+</body>
+</html>

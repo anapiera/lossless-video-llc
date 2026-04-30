@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project — Lossless Video</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- NAV -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="index.html"><img src="assets/images/L_logo.png" alt="Lossless Video"></a>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">HOME</a>
+            <a href="work.html">WORK</a>
+            <a href="services.html">SERVICES</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+            <div class="nav-indicator" id="indicator"></div>
+        </div>
+        <a href="contact.html" class="nav-btn">START PROJECT</a>
+    </div>
+
+    <div class="panel" style="margin-top:10px;">
+        <a href="work.html" class="back-link">← BACK TO PROJECTS</a>
+
+        <div id="projectContent"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div>STATUS: <span>ONLINE</span></div>
+        <div>RESOLUTION: <span>4K UHD</span></div>
+        <div>EST. <span data-year>2025</span></div>
+    </div>
+
+</div>
+
+<script src="assets/js/projects.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+    // Get project ID from URL (?id=donald)
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    const project = PROJECTS.find(p => p.id === id);
+    const content = document.getElementById('projectContent');
+
+    if (!project) {
+        content.innerHTML = `
+            <div style="padding:60px;text-align:center;">
+                <h2 style="color:#ffb400;font-size:20px;letter-spacing:2px;">PROJECT NOT FOUND</h2>
+                <p style="margin-top:14px;color:#888;font-size:12px;">
+                    The requested project does not exist.
+                </p>
+            </div>
+        `;
+    } else {
+        const galleryHtml = project.gallery && project.gallery.length
+            ? `<div class="gallery">${project.gallery.map(g => `<img src="${g}" alt="${project.title}" onclick="document.querySelector('.video-frame img,.video-frame video')?.scrollIntoView({behavior:'smooth'})">`).join('')}</div>`
+            : '';
+
+        const toolsHtml = (project.tools || []).map(t => `<li>${t}</li>`).join('');
+
+        // Decide whether to render <video> (local file) or <iframe> (external embed URL)
+        const isExternal = /^https?:\/\//.test(project.video);
+        const playerHtml = isExternal
+            ? `<iframe src="${project.video}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
+            : `<video src="${project.video}" poster="${project.poster}" controls preload="metadata"></video>`;
+
+        content.innerHTML = `
+            <div class="project-grid">
+                <div>
+                    <div class="video-frame">${playerHtml}</div>
+                </div>
+                <div class="project-meta panel">
+                    <h2>${project.title.toUpperCase()} — ${project.type.toUpperCase()}</h2>
+                    <div class="meta-row"><span>CLIENT:</span><span>${project.client}</span></div>
+                    <div class="meta-row"><span>TYPE:</span><span>${project.type}</span></div>
+                    <div class="meta-row"><span>YEAR:</span><span>${project.year}</span></div>
+                    <div class="meta-row"><span>DURATION:</span><span>${project.duration}</span></div>
+                    <h3>DESCRIPTION:</h3>
+                    <p>${project.description}</p>
+                    <h3>TOOLS USED:</h3>
+                    <ul class="tools-list">${toolsHtml}</ul>
+                </div>
+            </div>
+
+            ${galleryHtml ? `
+                <div class="section-header" style="margin-top:14px;">
+                    <span>PROJECT GALLERY</span>
+                </div>
+                ${galleryHtml}
+            ` : ''}
+        `;
+        document.title = `${project.title} — Lossless Video`;
+    }
+</script>
+
+</body>
+</html>
